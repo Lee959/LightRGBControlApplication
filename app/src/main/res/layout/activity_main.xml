@@ -1,72 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
+    <!-- Title -->
     <TextView
-        android:id="@+id/title_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="灯光控制"
+        android:text="灯光调节控制"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
 
-    <SeekBar
-        android:id="@+id/light_temp"
-        android:layout_width="0dp"
-        android:layout_height="42dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/light_bright"
-        android:padding="32"/>
+    <!-- Light Selection Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择灯:"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
 
-    <SeekBar
-        android:id="@+id/light_bright"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/light_image"
-        android:padding="32"/>
+    <Spinner
+        android:id="@+id/spinnerLights"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp" />
 
-    <ImageView
-        android:id="@+id/light_image"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="48dp"
-        android:src="@drawable/light_on"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_text" />
+    <!-- Light Status Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="状态: "
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvLightStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="离线"
+            android:textColor="#FF0000"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <!-- Light On/Off Switch -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="开关:"
+            android:textSize="16sp" />
+
+        <Switch
+            android:id="@+id/switchLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+    <!-- Brightness Control Section -->
 
     <TextView
-        android:id="@+id/status_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="亮度调节:"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <SeekBar
+            android:id="@+id/seekBarBrightness"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="255" />
+
+        <TextView
+            android:id="@+id/tvBrightnessValue"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <!-- Color Temperature Control Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="色温调节:"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <SeekBar
+            android:id="@+id/seekBarColorTemp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="370" />
+
+        <TextView
+            android:id="@+id/tvColorTempValue"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="未连接设备"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/refresh_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/refresh_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="刷新设备"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.479"
-        app:layout_constraintStart_toStartOf="parent" />
+        <View
+            android:id="@+id/viewLightIndicator"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#CCCCCC" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Refresh" />
+    </LinearLayout>
+
+</LinearLayout>
