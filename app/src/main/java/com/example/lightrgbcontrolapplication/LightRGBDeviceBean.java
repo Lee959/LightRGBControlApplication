@@ -1,6 +1,6 @@
 package com.example.lightrgbcontrolapplication;
 
-public class LightDeviceBean {
+public class LightRGBDeviceBean {
     private String name;
     private String ieee;
     private int ep;
@@ -9,7 +9,7 @@ public class LightDeviceBean {
     private int brightness;
     private int colorTemp;
 
-    public LightDeviceBean(String name, String ieee, int ep, int deviceType, boolean linkStatus, int brightness, int colorTemp) {
+    public LightRGBDeviceBean(String name, String ieee, int ep, int deviceType, boolean linkStatus, int brightness, int colorTemp) {
         this.name = name;
         this.ieee = ieee;
         this.ep = ep;

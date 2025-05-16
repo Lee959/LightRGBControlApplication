@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
 
     private static final String TAG = "MainActivity";
 
-    // UI components
     private TextView tvLightStatus;
     private SeekBar seekBarBrightness;
     private SeekBar seekBarColorTemp;
@@ -30,16 +29,12 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
     private TextView tvColorTempValue;
     private View viewLightIndicator;
     private Button btnRefresh;
-
-    // Device manager
     private DeviceMessagesManager deviceManager;
-    private LightDeviceBean currentLight;
+    private LightRGBDeviceBean currentLight;
 
-    // Flags to prevent infinite loop of updates
     private boolean isUserAdjustingBrightness = false;
     private boolean isUserAdjustingColorTemp = false;
 
-    // Handler for UI updates
     private Handler handler;
 
     @Override
@@ -47,10 +42,8 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize handler
         handler = new Handler(Looper.getMainLooper());
 
-        // Initialize UI components
         tvLightStatus = findViewById(R.id.tvLightStatus);
         seekBarBrightness = findViewById(R.id.seekBarBrightness);
         seekBarColorTemp = findViewById(R.id.seekBarColorTemp);
@@ -59,11 +52,9 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
         viewLightIndicator = findViewById(R.id.viewLightIndicator);
         btnRefresh = findViewById(R.id.btnRefresh);
 
-        // Initialize device manager
         deviceManager = DeviceMessagesManager.getInstance();
         deviceManager.registerMessageListener(this);
 
-        // Set up the brightness SeekBar
         seekBarBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -90,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
             }
         });
 
-        // Set up the color temperature SeekBar
         seekBarColorTemp.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -126,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
             }
         });
 
-        // Get initial list of devices
         deviceManager.GetEpList();
     }
 
@@ -136,9 +125,7 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
         super.onDestroy();
     }
 
-    /**
-     * Implements SocketMessageListener.getMessage to receive updates from the device manager.
-     */
+
     @Override
     public void getMessage(int commandID, Object bean) {
         Log.d(TAG, "Received message with command ID: " + commandID);
@@ -158,18 +145,14 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
         }
     }
 
-    /**
-     * Handle updates to the list of devices.
-     */
+
     private void handleDeviceListUpdate(DeviceListBean deviceListBean) {
-        List<LightDeviceBean> devices = deviceListBean.getDevices();
+        List<LightRGBDeviceBean> devices = deviceListBean.getDevices();
         if (devices != null && !devices.isEmpty()) {
-            // For simplicity, just use the first light device
-            LightDeviceBean device = devices.get(0);
+            LightRGBDeviceBean device = devices.get(0);
             if (device.getDeviceType() == Constants.LIGHT_EXTEND_LO_COLOR_TEMP_GOODVB) {
                 currentLight = device;
 
-                // Update UI on main thread
                 handler.post(() -> {
                     // Update status
                     tvLightStatus.setText(device.isLinkStatus() ? "在线" : "离线");
@@ -182,15 +165,11 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
         }
     }
 
-    /**
-     * Handle updates to the light brightness.
-     */
     private void handleBrightnessUpdate(DeviceListBean deviceListBean) {
-        List<LightDeviceBean> devices = deviceListBean.getDevices();
+        List<LightRGBDeviceBean> devices = deviceListBean.getDevices();
         if (devices != null && !devices.isEmpty() && !isUserAdjustingBrightness) {
-            LightDeviceBean device = devices.get(0);
+            LightRGBDeviceBean device = devices.get(0);
 
-            // Update UI on main thread
             handler.post(() -> {
                 seekBarBrightness.setProgress(device.getBrightness());
                 tvBrightnessValue.setText("亮度值: " + device.getBrightness());
@@ -199,15 +178,12 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
         }
     }
 
-    /**
-     * Handle updates to the light color temperature.
-     */
-    private void handleColorTempUpdate(DeviceListBean deviceListBean) {
-        List<LightDeviceBean> devices = deviceListBean.getDevices();
-        if (devices != null && !devices.isEmpty() && !isUserAdjustingColorTemp) {
-            LightDeviceBean device = devices.get(0);
 
-            // Update UI on main thread
+    private void handleColorTempUpdate(DeviceListBean deviceListBean) {
+        List<LightRGBDeviceBean> devices = deviceListBean.getDevices();
+        if (devices != null && !devices.isEmpty() && !isUserAdjustingColorTemp) {
+            LightRGBDeviceBean device = devices.get(0);
+
             handler.post(() -> {
                 seekBarColorTemp.setProgress(device.getColorTemp());
                 tvColorTempValue.setText("色温值: " + device.getColorTemp());
@@ -216,9 +192,7 @@ public class MainActivity extends AppCompatActivity implements SocketMessageList
         }
     }
 
-    /**
-     * Update the light indicator view based on current brightness and color temperature.
-     */
+
     private void updateLightIndicator() {
         if (viewLightIndicator != null) {
             // Calculate color based on brightness and color temperature

@@ -3,7 +3,7 @@ package com.example.lightrgbcontrolapplication.owon.sdk.util;
 import android.util.Log;
 
 import com.example.lightrgbcontrolapplication.DeviceListBean;
-import com.example.lightrgbcontrolapplication.LightDeviceBean;
+import com.example.lightrgbcontrolapplication.LightRGBDeviceBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,11 @@ public class DeviceMessagesManager {
     private static final String TAG = "DeviceMessagesManager";
     private static DeviceMessagesManager instance;
     private List<SocketMessageListener> listeners;
-    private LightDeviceBean currentLight;
+    private LightRGBDeviceBean currentLight;
 
     private DeviceMessagesManager() {
         listeners = new ArrayList<>();
-        // Initialize with a default light device for testing
-        currentLight = new LightDeviceBean(
+        currentLight = new LightRGBDeviceBean(
                 "RGB Light",
                 "AA:BB:CC:DD:EE:FF",
                 1,
@@ -66,9 +65,6 @@ public class DeviceMessagesManager {
      */
     public void SmartLightSetBrightness(String ieee, int ep, int brightnessValue) {
         Log.d(TAG, "Setting brightness to: " + brightnessValue);
-        // In a real app, you would send a command to the physical device here
-
-        // For demo purposes, update our simulated light
         currentLight.setBrightness(brightnessValue);
 
         // Notify listeners
@@ -86,9 +82,7 @@ public class DeviceMessagesManager {
      */
     public void SmartLightSetColorTemp(String ieee, int ep, int colorTempValue) {
         Log.d(TAG, "Setting color temperature to: " + colorTempValue);
-        // In a real app, you would send a command to the physical device here
 
-        // For demo purposes, update our simulated light
         currentLight.setColorTemp(colorTempValue);
 
         // Notify listeners
@@ -100,9 +94,7 @@ public class DeviceMessagesManager {
     /**
      * Get the current state of the light device.
      */
-    public void getDeviceState(LightDeviceBean device, int cache) {
-        // In a real app, you would query the physical device here
-        // For demo purposes, send our simulated light state
+    public void getDeviceState(LightRGBDeviceBean device, int cache) {
 
         for (SocketMessageListener listener : listeners) {
             // Send brightness update
@@ -116,7 +108,7 @@ public class DeviceMessagesManager {
     /* ---------- Helper methods for creating simulated responses ---------- */
 
     private void simulateLightDeviceListResponse() {
-        List<LightDeviceBean> lights = new ArrayList<>();
+        List<LightRGBDeviceBean> lights = new ArrayList<>();
         lights.add(currentLight);
 
         DeviceListBean deviceListBean = new DeviceListBean(lights);
@@ -127,13 +119,13 @@ public class DeviceMessagesManager {
     }
 
     private DeviceListBean createLightResponseWithBrightness() {
-        List<LightDeviceBean> lights = new ArrayList<>();
+        List<LightRGBDeviceBean> lights = new ArrayList<>();
         lights.add(currentLight);
         return new DeviceListBean(lights);
     }
 
     private DeviceListBean createLightResponseWithColorTemp() {
-        List<LightDeviceBean> lights = new ArrayList<>();
+        List<LightRGBDeviceBean> lights = new ArrayList<>();
         lights.add(currentLight);
         return new DeviceListBean(lights);
     }
@@ -141,7 +133,7 @@ public class DeviceMessagesManager {
     /**
      * Get the current light device.
      */
-    public LightDeviceBean getCurrentLight() {
+    public LightRGBDeviceBean getCurrentLight() {
         return currentLight;
     }
 }
