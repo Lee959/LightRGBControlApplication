@@ -8,10 +8,7 @@ import com.example.lightrgbcontrolapplication.LightRGBDeviceBean;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Device message manager class that handles communication with devices.
- * This class encapsulates methods for controlling and querying light devices.
- */
+
 public class DeviceMessagesManager {
 
     private static final String TAG = "DeviceMessagesManager";
