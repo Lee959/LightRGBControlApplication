@@ -79,6 +79,24 @@
 
     <!-- Brightness Control Section -->
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/viewLightIndicator"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#CCCCCC" />
+
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Refresh" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -136,24 +154,6 @@
             android:text="0"
             android:textSize="16sp" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <View
-            android:id="@+id/viewLightIndicator"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="#CCCCCC" />
-
-        <Button
-            android:id="@+id/btnRefresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Refresh" />
     </LinearLayout>
 
 </LinearLayout>
